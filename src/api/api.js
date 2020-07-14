@@ -13,5 +13,3 @@ export const articlesAPI = {
             });
     }
 };
-//https://cors-anywhere.herokuapp.com/https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=
-//input + '&format=json'
