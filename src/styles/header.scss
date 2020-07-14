@@ -1,0 +1,31 @@
+.header{
+
+}
+.header_logo {
+   font-size: 22px;
+  color: slategrey;
+}
+.search_block{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.search_result{
+  tr{
+   display: flex;
+    flex-direction: column;
+    width: 1200px;
+    margin-bottom: 10px;
+  }
+.search_result_table{
+  border: 1px solid slategrey;
+}
+  .search_result_title{
+    font-weight: bold;
+    border: none;
+    margin: 0;
+  }
+}
+
+
