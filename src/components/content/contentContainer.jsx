@@ -4,6 +4,7 @@ import {setItems, onSendInput, changeInput} from "../../redux/itemsReducers";
 import Content from "./content";
 
 class ContentContainer extends React.Component {
+
     render() {
         return (
             <>
