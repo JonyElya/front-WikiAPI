@@ -4,27 +4,43 @@ const instance = axios.create({
     baseURL: `https://cors-anywhere.herokuapp.com/https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=`,
 });
 const instanceMyApi = axios.create({
-    baseURL: `https://localhost:44301/api/articles`
+    baseURL: `https://localhost:44301/api/`
 });
-
 export const ItemsAPI = {
     getArticle(input) {
         return instanceMyApi
-            .get(`?title=${input}`)
+            .get(`articles?title=${input}`)
             .then(response => {
                 return response.data;
             });
     },
     getAll(){
         return instanceMyApi
-            .get()
+            .get(`articles`)
             .then(response => {
                 return response.data;
             });
+    },
+    create(values){
+        return instanceMyApi
+            .post(`articles`, values )
+            .then(response => response.data)
+    },
+    remove(id){
+        return instanceMyApi
+            .delete(`articles/${id}`)
+            .then(response => response.data)
+    },
+    update(id, values){
+        return instanceMyApi
+            .put(`articles/${id}`, values)
+            .then(response => response.data)
+    },
+    get(id){
+        return instanceMyApi.get(`/articles/${id}`)
     }
+
 };
-//https://cors-anywhere.herokuapp.com/https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=
-//input + '&format=json'
 
 export const articlesAPI = {
     getArticle(input) {
