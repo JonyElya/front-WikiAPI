@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ItemsAPI } from "../../api/requests";
-import { Button, Modal, Input } from "antd";
+import { Button, Input } from "antd";
 import "../../styles/App.scss";
 import {messageUpdate} from "../modal/modalMessage";
 

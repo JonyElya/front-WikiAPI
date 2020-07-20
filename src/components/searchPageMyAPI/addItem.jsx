@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ItemsAPI } from "../../api/requests";
-import { Form, Input, InputNumber, Button, Modal } from "antd";
-import {messageSubmit, messageSuccess} from "../modal/modalMessage";
+import { Form, Input, InputNumber, Button } from "antd";
+import {messageSubmit} from "../modal/modalMessage";
 
 const AddItem = () => {
   const initialItemsState = {
