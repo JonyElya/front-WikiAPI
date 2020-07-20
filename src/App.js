@@ -5,6 +5,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import SearchPage from "./components/searchPageMyAPI/searchPage";
 import AddItem from "./components/searchPageMyAPI/addItem";
 import UpdateItem from "./components/searchPageMyAPI/updateItem";
+import NotFound from "./components/notFound/notFoundPage";
 import "./styles/App.scss";
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
                   <Route path="/myApi" component={SearchPage} />
                   <Route path="/add" component={AddItem} />
                   <Redirect from="/" exact to="/myApi" />
+                  <Route component={NotFound}/>
               </Switch>
           </div>
   );
