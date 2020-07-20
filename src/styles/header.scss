@@ -5,27 +5,27 @@
    font-size: 22px;
   color: slategrey;
 }
-.search_block{
+.search_block {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.search_result{
-  tr{
-   display: flex;
-    flex-direction: column;
-    width: 1200px;
-    margin-bottom: 10px;
-  }
-.search_result_table{
-  border: 1px solid slategrey;
-}
-  .search_result_title{
-    font-weight: bold;
-    border: none;
-    margin: 0;
+.header_nav {
+    display: flex;
+    justify-content: flex-start;
+    list-style: none;
+  .header_nav_item {
+     margin: 10px;
+     font-size: 16px;
+   }
+  .header_nav_item:hover {
+    background-color: lightskyblue;
+    opacity: 0.4;
   }
 }
-
+.search_form {
+ display: flex;
+  flex-direction: row;
+}
 

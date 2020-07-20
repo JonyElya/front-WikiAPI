@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../styles/header.scss'
-import { Nav, NavItem,  NavLink } from 'reactstrap';
+import { Nav, NavItem, NavLink } from 'reactstrap';
 
 
 const Header = () => {
@@ -9,12 +9,15 @@ const Header = () => {
              <div className="header_logo">
                 React Live Search
             </div>
-            <Nav tabs>
-                <NavItem>
-                    <NavLink href="\" active>Home</NavLink>
+            <Nav className="header_nav">
+                <NavItem className="header_nav_item">
+                    <NavLink href="wikiApi" >Wiki API</NavLink>
                 </NavItem>
-                <NavItem>
-                    <NavLink href="myApi">MyApi API</NavLink>
+                <NavItem className="header_nav_item">
+                    <NavLink href="myApi" >MyApi API</NavLink>
+                </NavItem>
+                <NavItem className="header_nav_item">
+                    <NavLink href="add" >Add</NavLink>
                 </NavItem>
             </Nav>
         </div>

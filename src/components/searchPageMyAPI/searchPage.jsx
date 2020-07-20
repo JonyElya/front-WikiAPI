@@ -1,21 +1,16 @@
 import React, {useEffect, useState} from "react";
 import {ItemsAPI} from "../../api/requests";
-import { Input, Button } from 'antd';
-import '../../styles/header.scss'
+import {Input, Button, Spin, Table, Space} from 'antd';
+import '../../styles/header.scss';
 import 'antd/dist/antd.css';
-import SearchResult from "./searchResult";
-const { Search } = Input;
 
 const SearchPage = () => {
     const [items, setItems] = useState([]);
     const [input, setInput] = useState("")
-    const [currentItems, setCurrentItems] = useState(null);
-    const [currentIndex, setCurrentIndex] = useState(-1);
-
+    const [ spinner, setSpinner ] = useState(true)
     useEffect(() => {
         retrieveArticles();
     }, []);
-
     const changeText = (e) => {
         let text = e.target.value
         setInput(text)
@@ -29,11 +24,9 @@ const SearchPage = () => {
                 console.log(e);
             });
     };
-    const setActiveItems = (a, index) => {
-        setCurrentItems(a);
-        setCurrentIndex(index);
+    const refreshList = () => {
+        retrieveArticles();
     };
-
     const find = () => {
         ItemsAPI.getArticle(input)
             .then(data => {
@@ -43,6 +36,63 @@ const SearchPage = () => {
                 console.log(e);
             });
     };
+    useEffect(() => {
+        setTimeout(() => setSpinner(false), 1000)
+    }, []);
+    const deleteItem = (key) => {
+        ItemsAPI.remove(key)
+            .then(data => {
+                console.log(data)
+                refreshList()
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+    const columns = [
+        {
+            title: "Title",
+            dataIndex: "title",
+            key: "title",
+            ellipsis: true,
+            width: 200,
+        },
+        {
+            title: "Page ID",
+            dataIndex: "pageId",
+            key: "pageId",
+            width: 150,
+
+        },
+        {
+            title: "Snippet",
+            dataIndex: "snippet",
+            render: (text) => <div dangerouslySetInnerHTML={{__html: text}}></div>,
+            key: "snippet",
+            ellipsis: true,
+        },
+        {
+            title: "Timestamp",
+            dataIndex: "timestamp",
+            key: "timestamp",
+            width: 250,
+            render: (date) => {
+                let dateFormatted = new Date(date).toLocaleString()
+                return <div>{dateFormatted}</div>
+            }
+        },
+        {
+            title: "Action",
+            key: "action",
+            width: 200,
+            render: (text, record) => (
+                <Space size="middle">
+                    <a href={`update/${record.id}`}>Edit</a>
+                    <a onClick={() =>{deleteItem(record.id)}}>Delete</a>
+                </Space>
+            )
+        }
+    ]
     return (
         <div className="search_block">
             <div className="search_form">
@@ -52,31 +102,10 @@ const SearchPage = () => {
                     value={input}
                 />
                 <Button onClick={find}>Search</Button>
-                {/*<InputGroup>*/}
-                {/*    <Input type="text" placeholder='Enter...' value={input} onChange={changeText}/>*/}
-                {/*    <InputGroupAddon addonType="append">*/}
-                {/*        <Button color="secondary" onClick={find}>Search</Button>*/}
-                {/*    </InputGroupAddon>*/}
-                {/*</InputGroup>*/}
             </div>
             <div >
-                <SearchResult items={items}/>
+                <Spin spinning={spinner}><Table  rowKey="id" columns={columns}  dataSource={items} bordered /></Spin>
             </div>
-            {/*<div className="search_result">*/}
-            {/*    {items &&*/}
-            {/*    items.map((a, i) => (*/}
-            {/*        <div key={i}>*/}
-            {/*           <div className="search_result_title">pageID: {a.pageId}, {a.title}</div>*/}
-            {/*            <div className="">*/}
-            {/*                <div className="search_result_body">*/}
-            {/*                    <div className="search_result_body_item">{a.snippet}</div>*/}
-            {/*                    <div className="search_result_body_item">{a.timestamp}</div>*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    ))}*/}
-            {/*</div>*/}
-
         </div>
     );
 };
