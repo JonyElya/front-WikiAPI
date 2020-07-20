@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from "react";
-import {ItemsAPI} from "../../api/requests";
-import {Button, Modal, Input} from "antd";
-import '../../styles/App.scss'
+import { ItemsAPI } from "../../api/requests";
+import { Button, Modal, Input } from "antd";
+import "../../styles/App.scss";
+import {messageUpdate} from "../modal/modalMessage";
 
-const UpdateItem = props => {
+const UpdateItem = (props) => {
   const initialItemsState = {
     id: null,
     title: "",
     snippet: "",
     pageId: "",
-    timestamp: ""
+    timestamp: "",
   };
   const [currentArticle, setCurrentArticle] = useState(initialItemsState);
-  const [message, setMessage] = useState("");
   const { TextArea } = Input;
 
-  const getArticle = id => {
+  const getArticle = (id) => {
     ItemsAPI.get(id)
-      .then(response => {
+      .then((response) => {
         setCurrentArticle(response.data);
         console.log(response.data);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
   };
@@ -30,44 +30,27 @@ const UpdateItem = props => {
     getArticle(props.match.params.id);
   }, [props.match.params.id]);
 
-  const handleInputChange = event => {
+  const handleInputChange = (event) => {
     const { name, value } = event.target;
     setCurrentArticle({ ...currentArticle, [name]: value });
   };
-  const messageSuccess = () => {
-    let secondsToGo = 5;
-    const modal = Modal.success({
-      title: 'The item was updated successfully!',
-      content: `This modal will be destroyed after ${secondsToGo} second.`,
-    });
-    const timer = setInterval(() => {
-      secondsToGo -= 1;
-      modal.update({
-        content: `This modal will be destroyed after ${secondsToGo} second.`,
-      });
-    }, 1000);
-    setTimeout(() => {
-      clearInterval(timer);
-      modal.destroy();
-    }, secondsToGo * 1000);
-  }
-
   const updateArticle = () => {
     ItemsAPI.update(currentArticle.id, currentArticle)
-      .then(data => {
+      .then((data) => {
         console.log(data);
-        messageSuccess()
+        messageUpdate()
+        props.history.push("/myApi");
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
   };
   return (
     <div>
-     {currentArticle ? (
+      {currentArticle ? (
         <div className="edit-form">
           <h4>Update item</h4>
-         <form>
+          <form>
             <div className="form-group">
               <label htmlFor="title">Title</label>
               <Input
@@ -91,23 +74,19 @@ const UpdateItem = props => {
                 autoSize={{ minRows: 2, maxRows: 32 }}
               />
             </div>
-            <Button
-                 type="submit"
-                 onClick={updateArticle}
-
-            >
+            <Button type="submit" onClick={updateArticle}>
               Update
-           </Button>
+            </Button>
           </form>
-         </div>
-    ) : (
-        <div>
-              <br />
-              <p>Please click on a Tutorial...</p>
         </div>
-     )
-     }
-    </div>)
+      ) : (
+        <div>
+          <br />
+          <p>Please click on a Tutorial...</p>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default UpdateItem;
