@@ -5,14 +5,7 @@ import "../../styles/App.scss";
 import {messageUpdate} from "../modal/modalMessage";
 
 const UpdateItem = (props) => {
-  const initialItemsState = {
-    id: null,
-    title: "",
-    snippet: "",
-    pageId: "",
-    timestamp: "",
-  };
-  const [currentArticle, setCurrentArticle] = useState(initialItemsState);
+  const [currentArticle, setCurrentArticle] = useState([]);
   const { TextArea } = Input;
 
   const getArticle = (id) => {

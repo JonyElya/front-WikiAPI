@@ -50,8 +50,7 @@ const SearchWiki = () => {
       key: "timestamp",
       width: 250,
       render: (date) => {
-        let dateFormatted = new Date(date).toLocaleString();
-        return <div>{dateFormatted}</div>;
+        return <div>{new Date(date).toLocaleString()}</div>;
       },
     },
   ];

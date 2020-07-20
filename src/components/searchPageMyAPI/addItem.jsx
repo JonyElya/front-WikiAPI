@@ -1,37 +1,31 @@
-import React, { useState } from "react";
+import React, {useCallback, useState} from "react";
 import { ItemsAPI } from "../../api/requests";
 import { Form, Input, InputNumber, Button } from "antd";
 import {messageSubmit} from "../modal/modalMessage";
 
 const AddItem = () => {
-  const initialItemsState = {
-    id: null,
-    title: "",
-    snippet: "",
-    pageId: "",
-    timestamp: "",
-  };
-  const [item, setItems] = useState(initialItemsState);
+  const [item, setItems] = useState([]);
   const [submitted, setSubmitted] = useState(false);
-  const saveItems = (values) => {
+  const saveItems = useCallback((values) => {
     ItemsAPI.create(values)
-      .then((data) => {
-        setItems({
-          id: data.id,
-          title: data.title,
-          snippet: data.snippet,
-          pageId: data.pageId,
-          timestamp: data.timestamp,
+        .then((data) => {
+          setItems({
+            id: data.id,
+            title: data.title,
+            snippet: data.snippet,
+            pageId: data.pageId,
+            timestamp: data.timestamp,
+          });
+          setSubmitted(true);
+          messageSubmit()
+        })
+        .catch((e) => {
+          console.log(e);
         });
-        setSubmitted(true);
-        messageSubmit()
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+      }, []
+  )
   const newTutorial = () => {
-    setItems(initialItemsState);
+    setItems(item);
     setSubmitted(false);
   };
 
