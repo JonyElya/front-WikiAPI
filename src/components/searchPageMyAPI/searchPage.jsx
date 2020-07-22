@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ItemsAPI } from "../../api/requests";
-import { Input, Button, Spin, Table, Space } from "antd";
+import { Input, Spin, Table, Space } from "antd";
 import "../../styles/header.scss";
 import "antd/dist/antd.css";
 import {Link} from "react-router-dom";
@@ -9,6 +9,7 @@ const SearchPage = () => {
   const [items, setItems] = useState([]);
   const [input, setInput] = useState("");
   const [spinner, setSpinner] = useState(true);
+  const { Search } = Input;
   useEffect(() => {
     retrieveArticles();
   }, []);
@@ -69,7 +70,7 @@ const SearchPage = () => {
       dataIndex: "snippet",
       render: (text) => <div dangerouslySetInnerHTML={{ __html: text }}></div>,
       key: "snippet",
-      ellipsis: true,
+      ellipsis: true
     },
     {
       title: "Timestamp",
@@ -101,8 +102,14 @@ const SearchPage = () => {
   return (
     <div className="search_block">
       <div className="search_form">
-        <Input placeholder="Enter..." onChange={changeText} value={input} />
-        <Button onClick={find}>Search</Button>
+        <Search
+            placeholder="Enter..."
+            enterButton="Search"
+            size="large"
+            onChange={changeText}
+            value={input}
+            onSearch={find}
+        />
       </div>
       <div>
         <Spin spinning={spinner}>

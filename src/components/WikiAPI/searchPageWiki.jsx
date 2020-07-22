@@ -8,6 +8,7 @@ const SearchWiki = () => {
   const [items, setItems] = useState([]);
   const [input, setInput] = useState("");
   const [spinner, setSpinner] = useState(true);
+  const { Search } = Input;
   const changeText = (e) => {
     let text = e.target.value;
     setInput(text);
@@ -33,8 +34,8 @@ const SearchWiki = () => {
     },
     {
       title: "Page ID",
-      dataIndex: "pageId",
-      key: "pageId",
+      dataIndex: "pageid",
+      key: "pageid",
       width: 150,
     },
     {
@@ -57,8 +58,14 @@ const SearchWiki = () => {
   return (
     <div className="search_block">
       <div className="search_form">
-        <Input placeholder="Enter..." onChange={changeText} value={input} />
-        <Button onClick={find}>Search</Button>
+        <Search
+            placeholder="Enter..."
+            enterButton="Search"
+            size="large"
+            onChange={changeText}
+            value={input}
+            onSearch={find}
+        />
       </div>
       <div>
         <Spin spinning={spinner}>
