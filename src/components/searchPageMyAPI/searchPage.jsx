@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ItemsAPI } from "../../api/requests";
-import { Input, Spin, Table, Space } from "antd";
+import { Input, Spin, Table, Space, Popconfirm } from "antd";
 import "../../styles/header.scss";
 import "antd/dist/antd.css";
 import {Link} from "react-router-dom";
@@ -32,7 +32,9 @@ const SearchPage = () => {
   const find = () => {
     ItemsAPI.getArticle(input)
       .then((data) => {
+        setTimeout(() => setSpinner(true));
         setItems(data);
+        setTimeout(() => setSpinner(false), 1000);
       })
       .catch((e) => {
         console.log(e);
@@ -88,13 +90,18 @@ const SearchPage = () => {
       render: (text, record) => (
         <Space size="middle">
           <Link to={`update/${record.id}`}>Edit</Link>
-          <Link
-            onClick={() => {
-              deleteItem(record.id);
-            }}
+          <Popconfirm
+              title="Are you sure delete this item?"
+              okText="Yes"
+              cancelText="No"
+              onConfirm={() => {
+                deleteItem(record.id);
+              }}
           >
-            Delete
-          </Link>
+            <Link>
+              Delete
+            </Link>
+          </Popconfirm>
         </Space>
       ),
     },

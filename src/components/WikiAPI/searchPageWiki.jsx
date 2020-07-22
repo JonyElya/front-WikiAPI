@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { articlesAPI } from "../../api/requests";
-import { Input, Button, Spin, Table } from "antd";
+import { Input, Spin, Table } from "antd";
 import "../../styles/header.scss";
 import "antd/dist/antd.css";
 
@@ -17,6 +17,7 @@ const SearchWiki = () => {
     articlesAPI
       .getArticle(input)
       .then((data) => {
+         setSpinner(true);
         setItems(data.query.search);
         setTimeout(() => setSpinner(false), 1000);
       })
