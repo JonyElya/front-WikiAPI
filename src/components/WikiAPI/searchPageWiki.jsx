@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { articlesAPI } from "../../api/requests";
-import { Input, Button, Spin, Table } from "antd";
+import { Input, Spin, Table } from "antd";
 import "../../styles/header.scss";
 import "antd/dist/antd.css";
 
@@ -8,6 +8,7 @@ const SearchWiki = () => {
   const [items, setItems] = useState([]);
   const [input, setInput] = useState("");
   const [spinner, setSpinner] = useState(true);
+  const { Search } = Input;
   const changeText = (e) => {
     let text = e.target.value;
     setInput(text);
@@ -16,6 +17,7 @@ const SearchWiki = () => {
     articlesAPI
       .getArticle(input)
       .then((data) => {
+         setSpinner(true);
         setItems(data.query.search);
         setTimeout(() => setSpinner(false), 1000);
       })
@@ -33,8 +35,8 @@ const SearchWiki = () => {
     },
     {
       title: "Page ID",
-      dataIndex: "pageId",
-      key: "pageId",
+      dataIndex: "pageid",
+      key: "pageid",
       width: 150,
     },
     {
@@ -57,8 +59,14 @@ const SearchWiki = () => {
   return (
     <div className="search_block">
       <div className="search_form">
-        <Input placeholder="Enter..." onChange={changeText} value={input} />
-        <Button onClick={find}>Search</Button>
+        <Search
+            placeholder="Enter..."
+            enterButton="Search"
+            size="large"
+            onChange={changeText}
+            value={input}
+            onSearch={find}
+        />
       </div>
       <div>
         <Spin spinning={spinner}>

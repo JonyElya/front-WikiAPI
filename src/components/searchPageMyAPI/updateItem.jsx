@@ -45,12 +45,13 @@ const UpdateItem = (props) => {
           <h4>Update item</h4>
           <form>
             <div className="form-group">
-              <label htmlFor="title">Title</label>
+              <label  htmlFor="title">Title</label>
               <Input
                 type="text"
                 className="form-control"
                 id="title"
                 name="title"
+                required="required"
                 value={currentArticle.title}
                 onChange={handleInputChange}
               />
@@ -62,6 +63,7 @@ const UpdateItem = (props) => {
                 className="form-control"
                 id="snippet"
                 name="snippet"
+                required
                 value={currentArticle.snippet}
                 onChange={handleInputChange}
                 autoSize={{ minRows: 2, maxRows: 32 }}
